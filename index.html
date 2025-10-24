@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Saviour of Mankind Vocabulary Game</title>
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: #001f3f;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    background: #002080;
+    padding: 15px 0;
+    font-size: 22px;
+    font-weight: bold;
+    color: #FFD700;
+  }
+
+  header span {
+    font-weight: normal;
+    font-size: 18px;
+    margin-left: 10px;
+  }
+
+  h2 {
+    margin-top: 20px;
+    font-size: 28px;
+    color: #00FFFF;
+    font-weight: 600;
+  }
+
+  .set-buttons {
+    margin-top: 40px;
+  }
+
+  .set-btn {
+    display: block;
+    background: #0059b3;
+    color: #fff;
+    padding: 15px 30px;
+    margin: 15px auto;
+    width: 250px;
+    font-size: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+  }
+
+  .set-btn:hover {
+    background: #0099ff;
+  }
+
+  .game-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .card {
+    background: #002c6f;
+    padding: 30px 20px;
+    border-radius: 20px;
+    width: 400px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+
+  .word-btn {
+    display: block;
+    background: #001f4d;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 20px;
+    padding: 18px 10px;
+    margin: 12px 0;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+  }
+
+  .word-btn:hover {
+    background: #0059b3;
+  }
+
+  .correct {
+    background-color: #28a745 !important;
+  }
+
+  .wrong {
+    background-color: #dc3545 !important;
+  }
+
+  .buttons {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .buttons button {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+  }
+
+  #correct {
+    background-color: #28a745;
+  }
+  #correct:hover {
+    background-color: #218838;
+  }
+
+  #wrong {
+    background-color: #dc3545;
+  }
+  #wrong:hover {
+    background-color: #b02a37;
+  }
+
+  #reset {
+    background-color: #00c8ff;
+  }
+  #reset:hover {
+    background-color: #008dbf;
+  }
+
+  #message {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    min-height: 24px;
+  }
+
+  #result {
+    margin-top: 20px;
+  }
+
+  #result button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #00c8ff;
+    color: #fff;
+    transition: 0.3s;
+  }
+
+  #result button:hover {
+    background-color: #008dbf;
+  }
+</style>
+</head>
+<body>
+  <header>Shaheen School & Coaching Center <span>0313 8682068</span></header>
+  <h2>Unit 1: The Saviour of Mankind</h2>
+
+  <div id="home" class="set-buttons">
+    <button class="set-btn" onclick="startSet(0)">Set 1 (Words 1–20)</button>
+    <button class="set-btn" onclick="startSet(1)">Set 2 (Words 21–40)</button>
+    <button class="set-btn" onclick="startSet(2)">Set 3 (Words 41–60)</button>
+  </div>
+
+  <div id="game" class="game-container" style="display:none;">
+    <div class="card">
+      <div id="words"></div>
+      <div id="message"></div>
+      <div class="buttons" id="gameButtons">
+        <button id="correct">Correct: 0 / 20</button>
+        <button id="wrong">Wrong: 0</button>
+        <button id="reset">Reset</button>
+      </div>
+      <div id="result"></div>
+    </div>
+  </div>
+
+<script>
+const wordSets = [
+  [
+    ["Saviour","Savyour","Savieur"],["Mankind","Makind","Mankined"],
+    ["Unparalleled","Unparalelled","Unparallled"],["Charm","Charme","Chaarm"],
+    ["Trackless","Trackles","Trakless"],["Desert","Desart","Desurt"],
+    ["Dunes","Duns","Duunes"],["Dazzling","Dazling","Dazeling"],
+    ["Dilemma","Dilemna","Dillema"],["Starry","Stary","Starrey"],
+    ["Excited","Excitedd","Exsited"],["Imagination","Imaginashun","Imaginaton"],
+    ["Travelers","Travellers","Travlers"],["Red Sea","RedSee","Redd Sea"],
+    ["Possessed","Posessed","Posesssed"],["Remarkable","Remarkabel","Remarcable"],
+    ["Memory","Memorie","Memry"],["Eloquent","Eloquant","Eloquente"],
+    ["Eloquence","Eloconce","Eloquance"],["Expression","Exprission","Expretion"]
+  ],
+  [
+    ["Poetical","Poeticalle","Poetikal"],["Competition","Competision","Compeetition"],
+    ["Wonder","Wondr","Wondeer"],["Bestowed","Bestowd","Bestowedd"],
+    ["Ukaz","Ukazs","Ucaz"],["Narrated","Nareted","Narated"],
+    ["Witness","Witnes","Wittness"],["Exclusively","Exclussively","Exclusivly"],
+    ["Promulgation","Promulgashun","Promulgaton"],["Dispensation","Dispesation","Dispencation"],
+    ["Preservation","Preservashun","Preservaton"],["Verge","Vurge","Varg"],
+    ["Chaos","Chaaos","Choes"],["Civilization","Civilisashun","Civillization"],
+    ["Eradicate","Eradicat","Eradikkate"],["Ignorance","Ignorence","Ignorrance"],
+    ["Solitude","Solitud","Solitoode"],["Meditation","Meditashun","Meditasion"],
+    ["Remembrance","Remembrence","Remembranse"],["Overflowing","Overflwoing","Overflwing"]
+  ],
+  [
+    ["Profound","Profounnd","Profaund"],["Compassion","Compashun","Compasshun"],
+    ["Theology","Theolgy","Theoleg"],["Social Evils","Social Evils","Soshal Evils"],
+    ["Cruelty","Crueltee","Crualty"],["Injustice","Injustise","Injustece"],
+    ["Abandon","Abandonn","Abandonn"],["Prophethood","Profethood","Prophethud"],
+    ["Conveyed","Conveyd","Conveyedd"],["Impressed","Impresed","Impresed"],
+    ["Firm","Firme","Fyrm"],["Determination","Determinasion","Determinattion"],
+    ["Embodiment","Emboddiment","Embodimant"],["Superstition","Superstishun","Superstitionn"],
+    ["Disbelief","Disbelif","Disbleif"],["Divine","Divyne","Devine"],
+    ["Everlasting","Everlastng","Everlastic"],["Influential","Influenshal","Influencial"],
+    ["Renounce","Renounse","Renouncce"],["Elevation","Elevashion","Elevashun"]
+  ]
+];
+
+let setIndex = 0;
+let current = 0;
+let correctCount = 0;
+let wrongCount = 0;
+
+const homeDiv = document.getElementById("home");
+const gameDiv = document.getElementById("game");
+const wordsDiv = document.getElementById("words");
+const messageDiv = document.getElementById("message");
+const correctBtn = document.getElementById("correct");
+const wrongBtn = document.getElementById("wrong");
+const gameButtons = document.getElementById("gameButtons");
+const resultDiv = document.getElementById("result");
+
+function shuffle(array){ return array.sort(() => Math.random()-0.5); }
+
+function startSet(index){
+  setIndex = index;
+  current = 0;
+  correctCount = 0;
+  wrongCount = 0;
+  correctBtn.textContent = `Correct: 0 / ${wordSets[setIndex].length}`;
+  wrongBtn.textContent = `Wrong: 0`;
+  resultDiv.innerHTML = '';
+  gameButtons.style.display = "flex";
+  homeDiv.style.display = "none";
+  gameDiv.style.display = "flex";
+  showWord();
+}
+
+function showWord(){
+  wordsDiv.innerHTML = "";
+  messageDiv.textContent = "";
+  resultDiv.innerHTML = "";
+
+  if(current >= wordSets[setIndex].length){
+    // SHOW FINAL RESULT AND HIDE BUTTONS
+    gameButtons.style.display = "none"; 
+    resultDiv.innerHTML = `
+      <h2>🎉 Set Complete!</h2>
+      <p style="font-size:22px;">Correct: ${correctCount} / ${wordSets[setIndex].length}</p>
+      <p style="font-size:22px;">Wrong: ${wrongCount}</p>
+      <button onclick="backToHome()">Back to Sets</button>
+    `;
+    wordsDiv.innerHTML = "";
+    return;
+  }
+
+  gameButtons.style.display = "flex"; // keep buttons visible during set
+
+  const options = shuffle([...wordSets[setIndex][current]]);
+  const correctWord = wordSets[setIndex][current][0];
+
+  options.forEach(word => {
+    const btn = document.createElement("div");
+    btn.className = "word-btn";
+    btn.textContent = word;
+    btn.onclick = () => handleClick(word, correctWord, btn);
+    wordsDiv.appendChild(btn);
+  });
+}
+
+function handleClick(selected, correctWord, btn){
+  const buttons = document.querySelectorAll(".word-btn");
+  buttons.forEach(b => b.onclick = null);
+
+  if(selected === correctWord){
+    btn.classList.add("correct");
+    messageDiv.textContent = "✅ Correct!";
+    correctCount++;
+    correctBtn.textContent = `Correct: ${correctCount} / ${wordSets[setIndex].length}`;
+  } else {
+    btn.classList.add("wrong");
+    messageDiv.textContent = "❌ Wrong!";
+    wrongCount++;
+    wrongBtn.textContent = `Wrong: ${wrongCount}`;
+
+    buttons.forEach(b=>{
+      if(b.textContent === correctWord) b.classList.add("correct");
+    });
+  }
+
+  setTimeout(()=>{
+    current++;
+    showWord();
+  },1500);
+}
+
+document.getElementById("reset").onclick = ()=>{ startSet(setIndex); };
+
+function backToHome(){
+  gameDiv.style.display = "none";
+  homeDiv.style.display = "block";
+}
+</script>
+</body>
+</html>
